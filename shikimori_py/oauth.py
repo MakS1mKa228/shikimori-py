@@ -55,7 +55,7 @@ class OAuth():
             "client_id": self._config["client_id"],
             "client_secret": self._config["client_secret"],
             "code": self._config["oauth_code"],
-            "redirect_uri":"https://shikimori.org/oauth"    
+            "redirect_uri":"https://shikimori.one/oauth"    
         }
         resp: Response = r_post("https://shikimori.one/oauth/token", headers=headers, data=body)
         json = resp.json()
