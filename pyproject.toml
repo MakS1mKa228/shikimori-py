@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "shikimori_py"
+version = "0.0.1"
+description = "An API wrapper for ShikiMori"
+authors = ["KamiyaHideki <maksim_stepanov_06@mail.ru>"]
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.28.1"
+pydantic = "^1.9.1"
+
+[tool.poetry.dev-dependencies]
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry.scripts]
+start = "example:main"
