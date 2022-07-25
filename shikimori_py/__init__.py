@@ -13,11 +13,11 @@ class ShikiMori():
         self._oauth = OAuth(authorization_code)
         self._access_token = self._oauth.get_token()
 
-    def get(self, type, query) -> list[AnimeItem]:
+    def get(self, endpoint, query) -> list[AnimeItem | MangaItem | RanobeItem]:
 
-        self._type = type
+        self._endpoint = endpoint
         self._query = [f"?{key}={value}" for key, value in query.items()]
-        self._url = f"https://shikimori.one/api/{type}{''.join(self._query)}"
+        self._url = f"https://shikimori.one/api/{endpoint}{''.join(self._query)}"
 
         resp: Response = _r_get(self._url, headers = {
             "User-Agent": "shikimori-py",
@@ -27,10 +27,13 @@ class ShikiMori():
             self._access_token = self._oauth.refresh()
             return self.get(type, query)
         
-        if self._type == "animes": return [AnimeItem(**item) for item in resp.json()]  
-        if self._type == "mangas": return [MangaItem(**item) for item in resp.json()]
-        if self._type == "ranobe": return [RanobeItem(**item) for item in resp.json()]
-
-
-
+        match self._endpoint:
+            case "animes":
+                return [AnimeItem(**item) for item in resp.json()]
+            case "mangas":
+                return [MangaItem(**item) for item in resp.json()]
+            case "ranobe":
+                return [RanobeItem(**item) for item in resp.json()]
+            case _:
+                return "Error! Cannot find this endpoint"
 __all__ = ["ShikiMori"]
